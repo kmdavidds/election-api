@@ -16,6 +16,8 @@ func init() {
 func main() {
 	db := mysql.ConnectDatabase()
 
+	mysql.Migrate(db)
+
 	repository := repository.NewRepository(db)
 
 	usecase := usecase.NewUsecase(usecase.InitParam{Repository: repository})
