@@ -4,6 +4,7 @@ import (
 	"github.com/kmdavidds/election-api/internal/delivery/rest"
 	"github.com/kmdavidds/election-api/internal/repository"
 	"github.com/kmdavidds/election-api/internal/usecase"
+	"github.com/kmdavidds/election-api/pkg/bcrypt"
 	"github.com/kmdavidds/election-api/pkg/config"
 	"github.com/kmdavidds/election-api/pkg/database/mysql"
 	"github.com/kmdavidds/election-api/pkg/middleware"
@@ -14,13 +15,15 @@ func init() {
 }
 
 func main() {
+	bcrypt := bcrypt.Init()
+
 	db := mysql.ConnectDatabase()
 
 	mysql.Migrate(db)
 
 	repository := repository.NewRepository(db)
 
-	usecase := usecase.NewUsecase(usecase.InitParam{Repository: repository})
+	usecase := usecase.NewUsecase(usecase.InitParam{Repository: repository, Bcrypt: bcrypt})
 
 	middleware := middleware.Init(usecase)
 
