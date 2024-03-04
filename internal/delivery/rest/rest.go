@@ -35,6 +35,7 @@ func (r *Rest) MountEndpoint() {
 
 	post := routerGroup.Group("/posts")
 	post.POST("", r.middleware.AuthenticateUser, r.middleware.OnlyCandidates, r.CreatePost)
+	post.DELETE("", r.middleware.AuthenticateUser, r.middleware.OnlyCandidates, r.DeletePost)
 }
 
 func (r *Rest) Serve() {

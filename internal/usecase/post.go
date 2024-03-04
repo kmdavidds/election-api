@@ -10,6 +10,7 @@ import (
 type IPostUsecase interface {
 	GetPost(param model.PostParam) (entity.Post, error)
 	CreatePost(param model.PostCreate) error
+	DeletePost(param model.PostDelete) error
 }
 
 type PostUsecase struct {
@@ -42,4 +43,8 @@ func (pu *PostUsecase) CreatePost(param model.PostCreate) error {
 	}
 
 	return nil
+}
+
+func (pu *PostUsecase) DeletePost(param model.PostDelete) error {
+	return pu.pr.DeletePost(param)
 }

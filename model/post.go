@@ -18,3 +18,11 @@ type PostParam struct {
 	ID     uuid.UUID `json:"-"`
 	UserID uuid.UUID `json:"-"`
 }
+
+type PostDelete struct {
+	ID        uuid.UUID `json:"id" binding:"required,min=1"`
+	UserID    uuid.UUID `json:"-"`
+	Title     string    `json:"-"` 
+	Body      string    `json:"-"`
+	CreatedAt time.Time `json:"-"`
+}

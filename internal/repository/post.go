@@ -9,6 +9,7 @@ import (
 type IPostRepository interface {
 	CreatePost(post entity.Post) (entity.Post, error)
 	GetPost(param model.PostParam) (entity.Post, error)
+	DeletePost(post model.PostDelete) error
 }
 
 type PostRepository struct {
@@ -38,4 +39,13 @@ func (pr *PostRepository) GetPost(param model.PostParam) (entity.Post, error) {
 	}
 
 	return post, nil
+}
+
+func (pr *PostRepository) DeletePost(post model.PostDelete) error {
+	err := pr.db.Delete(&entity.Post{}, post.ID).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
