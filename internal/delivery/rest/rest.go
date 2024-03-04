@@ -3,6 +3,7 @@ package rest
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -25,7 +26,12 @@ func NewRest(usecase *usecase.Usecase, middleware middleware.Interface) *Rest {
 }
 
 func (r *Rest) MountEndpoint() {
+	routerGroup := r.router.Group("/api/v1")
 
+	routerGroup.GET("/login-user", r.middleware.AuthenticateUser, getLoginUser)
+
+	routerGroup.POST("/register", r.Register)
+	routerGroup.POST("/login", r.Login)
 }
 
 func (r *Rest) Serve() {
@@ -36,4 +42,18 @@ func (r *Rest) Serve() {
 	if err != nil {
 		log.Fatalf("Error while serving: %v", err)
 	}
+}
+
+func getLoginUser(ctx *gin.Context) {
+	user, ok := ctx.Get("user")
+	if !ok {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": "failed get login user",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"user": user,
+	})
 }

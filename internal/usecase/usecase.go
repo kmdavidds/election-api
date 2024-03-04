@@ -12,8 +12,8 @@ type Usecase struct {
 
 type InitParam struct {
 	Repository *repository.Repository
-	Bcrypt bcrypt.Interface
-	JWT jwt.Interface
+	Bcrypt     bcrypt.Interface
+	JWT        jwt.Interface
 }
 
 func NewUsecase(param InitParam) *Usecase {

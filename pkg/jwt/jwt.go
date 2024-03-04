@@ -43,16 +43,16 @@ func Init() Interface {
 }
 
 func (j *jsonWebToken) CreateJWTToken(userId uuid.UUID) (string, error) {
-	claims := Claims{
+	claims := &Claims{
 		UserId: userId,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(j.ExpiredTime)),
 		},
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodES256, &claims)
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	tokenString, err := token.SignedString(j.SecretKey)
+	tokenString, err := token.SignedString([]byte(j.SecretKey))
 	if err != nil {
 		return tokenString, err
 	}
