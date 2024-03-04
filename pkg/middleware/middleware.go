@@ -8,6 +8,7 @@ import (
 
 type Interface interface {
 	AuthenticateUser(ctx *gin.Context)
+	OnlyCandidates(ctx *gin.Context)
 }
 
 type middleware struct {
