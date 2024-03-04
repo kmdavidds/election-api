@@ -21,7 +21,7 @@ func NewUserUsecase(userRepository repository.IUserRepository, bcrypt bcrypt.Int
 	return &UserUsecase{
 		ur:     userRepository,
 		bcrypt: bcrypt,
-		jwt: jwt,
+		jwt:    jwt,
 	}
 }
 

@@ -13,11 +13,11 @@ type Usecase struct {
 type InitParam struct {
 	Repository *repository.Repository
 	Bcrypt bcrypt.Interface
-	JWTAuth jwt.Interface
+	JWT jwt.Interface
 }
 
 func NewUsecase(param InitParam) *Usecase {
-	userUsecase := NewUserUsecase(param.Repository.UserRepository, param.Bcrypt, param.JWTAuth)
+	userUsecase := NewUserUsecase(param.Repository.UserRepository, param.Bcrypt, param.JWT)
 
 	return &Usecase{
 		UserUsecase: userUsecase,
